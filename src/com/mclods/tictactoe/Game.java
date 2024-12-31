@@ -7,32 +7,38 @@ public class Game {
     final char PLAYER_1_SYMBOL = 'X', PLAYER_2_SYMBOL = 'O';
     GameBoard gb;
     Player p1, p2;
-    boolean gameWon;
-    Player currentPlayer;
+    boolean gameWon, gameTie;
+    Player currentPlayer, winner;
     Scanner sc;
 
     public Game() {
         gb = new GameBoard(BOARD_SIZE);
         gameWon = false;
+        gameTie = false;
         sc = new Scanner(System.in);
     }
 
     public void startGame() {
-        System.out.println("---------------Java Tic Tac Toe---------------");
-        System.out.println("**********************************************");
-        System.out.println("------------------Game Starts-----------------");
-        System.out.println("**********************************************");
-
+        printWelcomeText();
         initPlayers();
         currentPlayer = p1;
 
         do {
             gameTurn();
-        } while (!gameWon);
-    }
+            gameTie = checkTie();
+            gameWon = checkWin();
+        } while (!gameWon && !gameTie);
 
-    void resetGame() {
-        // Need to implement
+        if (gameTie) {
+            System.out.println("**********************************************");
+            System.out.println("-----------------It's a Tie :(----------------");
+            System.out.println("**********************************************");
+        } else {
+            System.out.println("**********************************************");
+            System.out.println("-----------------It's a Win :)----------------");
+            System.out.println("*** " + winner.getName() + " WON!!!");
+            System.out.println("**********************************************");
+        }
     }
 
     private void gameTurn() {
@@ -54,6 +60,19 @@ public class Game {
         } while (!turnCompleted);
     }
 
+    private boolean checkWin() {
+        if (gb.checkWin()) {
+            winner = currentPlayer.equals(p1) ? p2 : p1;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean checkTie() {
+        return gb.isBoardFull();
+    }
+
     private void initPlayers() {
         String p1Name, p2Name;
 
@@ -67,5 +86,12 @@ public class Game {
 
         p1 = new Player(p1Name, PLAYER_1_SYMBOL);
         p2 = new Player(p2Name, PLAYER_2_SYMBOL);
+    }
+
+    private void printWelcomeText() {
+        System.out.println("---------------Java Tic Tac Toe---------------");
+        System.out.println("**********************************************");
+        System.out.println("------------------Game Starts-----------------");
+        System.out.println("**********************************************");
     }
 }
