@@ -13,27 +13,17 @@ class GameBoard {
 
     void getBoard() {
         for (char[] i : board) {
-            for(char x : i) {
+            for (char x : i) {
                 System.out.print("|-----|");
             }
             System.out.println();
-
-//            for(char x : i) {
-//                System.out.print("|     |");
-//            }
-//            System.out.println();
 
             for (char j : i) {
                 System.out.print("|  " + j + "  |");
             }
             System.out.println();
 
-//            for(char x : i) {
-//                System.out.print("|     |");
-//            }
-//            System.out.println();
-
-            for(char x : i) {
+            for (char x : i) {
                 System.out.print("|-----|");
             }
             System.out.println();
@@ -41,7 +31,7 @@ class GameBoard {
     }
 
     boolean updateBoard(int xIndex, int yIndex, char playerSymbol) {
-        if (xIndex < boardSize && yIndex < boardSize && board[xIndex][yIndex] == '-') {
+        if ((xIndex >= 0 && xIndex < boardSize) && (yIndex >= 0 && yIndex < boardSize) && board[xIndex][yIndex] == '-') {
             board[xIndex][yIndex] = playerSymbol;
             return true;
         }

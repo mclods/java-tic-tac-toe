@@ -19,8 +19,9 @@ public class Game {
 
     public void startGame() {
         System.out.println("---------------Java Tic Tac Toe---------------");
-        System.out.println("----------------------------------------------");
+        System.out.println("**********************************************");
         System.out.println("------------------Game Starts-----------------");
+        System.out.println("**********************************************");
 
         initPlayers();
         currentPlayer = p1;
