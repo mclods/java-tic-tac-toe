@@ -1,18 +1,18 @@
 package com.mclods.tictactoe;
 
 class GameBoard {
-    private final int boardSize;
+    private final int boardDim;
     private final char[][] board;
     private final char EMPTY_SYMBOL = '-';
 
-    GameBoard(int boardSize) {
-        this.boardSize = boardSize;
-        board = new char[boardSize][boardSize];
+    GameBoard(int boardDim) {
+        this.boardDim = boardDim;
+        board = new char[boardDim][boardDim];
 
         resetBoard();
     }
 
-    void getBoard() {
+    void printBoard() {
         for (char[] i : board) {
             for (char x : i) {
                 System.out.print("|-----|");
@@ -32,7 +32,7 @@ class GameBoard {
     }
 
     boolean updateBoard(int xIndex, int yIndex, char playerSymbol) {
-        if ((xIndex >= 0 && xIndex < boardSize) && (yIndex >= 0 && yIndex < boardSize) && board[xIndex][yIndex] == EMPTY_SYMBOL) {
+        if ((xIndex >= 0 && xIndex < boardDim) && (yIndex >= 0 && yIndex < boardDim) && board[xIndex][yIndex] == EMPTY_SYMBOL) {
             board[xIndex][yIndex] = playerSymbol;
             return true;
         }
@@ -40,8 +40,8 @@ class GameBoard {
     }
 
     void resetBoard() {
-        for (int i = 0; i < boardSize; i++) {
-            for (int j = 0; j < boardSize; j++) {
+        for (int i = 0; i < boardDim; i++) {
+            for (int j = 0; j < boardDim; j++) {
                 board[i][j] = EMPTY_SYMBOL;
             }
         }
@@ -63,12 +63,13 @@ class GameBoard {
     }
 
     private boolean checkRowWin() {
-        for (int i = 0; i < boardSize; i++) {
+        // Parse the board row by row and check for match
+        for (int i = 0; i < boardDim; i++) {
             boolean match = true;
             char symbol = board[i][0];
 
             if (symbol != EMPTY_SYMBOL) {
-                for (int j = 1; j < boardSize; j++) {
+                for (int j = 1; j < boardDim; j++) {
                     if (board[i][j] != symbol) {
                         match = false;
                         break;
@@ -83,12 +84,13 @@ class GameBoard {
     }
 
     private boolean checkColWin() {
-        for (int i = 0; i < boardSize; i++) {
+        // Parse the board column by column and check for match
+        for (int i = 0; i < boardDim; i++) {
             boolean match = true;
             char symbol = board[0][i];
 
             if (symbol != EMPTY_SYMBOL) {
-                for (int j = 1; j < boardSize; j++) {
+                for (int j = 1; j < boardDim; j++) {
                     if (board[j][i] != symbol) {
                         match = false;
                         break;
@@ -108,7 +110,7 @@ class GameBoard {
         char symbol = board[0][0];
 
         if (symbol != EMPTY_SYMBOL) {
-            for (int i = 1; i < boardSize; i++) {
+            for (int i = 1; i < boardDim; i++) {
                 if (board[i][i] != symbol) {
                     match = false;
                     break;
@@ -122,17 +124,19 @@ class GameBoard {
 
         // Check second diagonal
         match = true;
-        symbol = board[0][boardSize - 1];
+        symbol = board[0][boardDim - 1];
 
         if (symbol != EMPTY_SYMBOL) {
-            for (int i = 1; i < boardSize; i++) {
-                if (board[i][boardSize - 1 - i] != symbol) {
+            for (int i = 1; i < boardDim; i++) {
+                if (board[i][boardDim - 1 - i] != symbol) {
                     match = false;
                     break;
                 }
             }
             return match;
         }
+
+        // No diagonal matched
         return false;
     }
 }
