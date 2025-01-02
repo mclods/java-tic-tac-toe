@@ -29,6 +29,8 @@ public class Game {
             gameWon = checkWin();
         } while (!gameWon && !gameTie);
 
+        gb.printBoard();
+
         if (gameTie) {
             System.out.println("**********************************************");
             System.out.println("-----------------It's a Tie :(----------------");
@@ -45,7 +47,7 @@ public class Game {
         boolean turnCompleted = false;
 
         do {
-            gb.getBoard();
+            gb.printBoard();
 
             System.out.println("Choose a position for " + currentPlayer.getName() + "(" + currentPlayer.getSymbol() + ")" + " (1 - 9):");
             int position = Integer.parseInt(sc.nextLine()) - 1;
