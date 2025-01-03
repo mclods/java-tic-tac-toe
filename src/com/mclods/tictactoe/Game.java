@@ -3,13 +3,13 @@ package com.mclods.tictactoe;
 import java.util.Scanner;
 
 public class Game {
-    final int BOARD_SIZE = 3;
-    final char PLAYER_1_SYMBOL = 'X', PLAYER_2_SYMBOL = 'O';
-    GameBoard gb;
-    Player p1, p2;
-    boolean gameWon, gameTie;
-    Player currentPlayer, winner;
-    Scanner sc;
+    private final int BOARD_SIZE = 3;
+    private final char PLAYER_1_SYMBOL = 'X', PLAYER_2_SYMBOL = 'O';
+    private final GameBoard gb;
+    private Player p1, p2;
+    private boolean gameWon, gameTie;
+    private Player currentPlayer, winner;
+    private final Scanner sc;
 
     public Game() {
         gb = new GameBoard(BOARD_SIZE);
