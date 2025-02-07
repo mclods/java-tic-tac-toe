@@ -9,24 +9,15 @@ import static org.junit.jupiter.api.Assertions.*;
 class GameBoardTest {
     private final ByteArrayOutputStream testOutputStream = new ByteArrayOutputStream();
     private final PrintStream originalOutputStream = System.out;
-    private final String EXPECTED_EMPTY_BOARD_PRINT = "|-----||-----||-----|" +
-            System.lineSeparator() +
-            "|  -  ||  -  ||  -  |" +
-            System.lineSeparator() +
-            "|-----||-----||-----|" +
-            System.lineSeparator() +
-            "|-----||-----||-----|" +
-            System.lineSeparator() +
-            "|  -  ||  -  ||  -  |" +
-            System.lineSeparator() +
-            "|-----||-----||-----|" +
-            System.lineSeparator() +
-            "|-----||-----||-----|" +
-            System.lineSeparator() +
-            "|  -  ||  -  ||  -  |" +
-            System.lineSeparator() +
-            "|-----||-----||-----|" +
-            System.lineSeparator();
+    private final String EXPECTED_EMPTY_BOARD_PRINT = """
+            |-----||-----||-----|
+            |  -  ||  -  ||  -  |
+            |-----||-----||-----|
+            |  -  ||  -  ||  -  |
+            |-----||-----||-----|
+            |  -  ||  -  ||  -  |
+            |-----||-----||-----|
+            """;
     private GameBoard gb;
 
     @BeforeEach
@@ -40,11 +31,15 @@ class GameBoardTest {
         System.setOut(originalOutputStream);
     }
 
+    private String getConsoleOutput() {
+        return testOutputStream.toString().replaceAll(System.lineSeparator(), "\n");
+    }
+
     @Test
     @DisplayName("Test empty board gets printed correctly")
     void testEmptyBoardPrint() {
         gb.printBoard();
-        assertEquals(EXPECTED_EMPTY_BOARD_PRINT, testOutputStream.toString());
+        assertEquals(EXPECTED_EMPTY_BOARD_PRINT, getConsoleOutput());
     }
 
     @Test
@@ -56,26 +51,17 @@ class GameBoardTest {
 
         gb.printBoard();
 
-        String expectedOutput = "|-----||-----||-----|" +
-                System.lineSeparator() +
-                "|  X  ||  -  ||  -  |" +
-                System.lineSeparator() +
-                "|-----||-----||-----|" +
-                System.lineSeparator() +
-                "|-----||-----||-----|" +
-                System.lineSeparator() +
-                "|  -  ||  O  ||  -  |" +
-                System.lineSeparator() +
-                "|-----||-----||-----|" +
-                System.lineSeparator() +
-                "|-----||-----||-----|" +
-                System.lineSeparator() +
-                "|  -  ||  X  ||  -  |" +
-                System.lineSeparator() +
-                "|-----||-----||-----|" +
-                System.lineSeparator();
+        String expectedOutput = """
+                |-----||-----||-----|
+                |  X  ||  -  ||  -  |
+                |-----||-----||-----|
+                |  -  ||  O  ||  -  |
+                |-----||-----||-----|
+                |  -  ||  X  ||  -  |
+                |-----||-----||-----|
+                """;
 
-        assertEquals(expectedOutput, testOutputStream.toString());
+        assertEquals(expectedOutput, getConsoleOutput());
         assertTrue(update1);
         assertTrue(update2);
         assertTrue(update3);
@@ -85,7 +71,7 @@ class GameBoardTest {
     @DisplayName("Test board is not updated if xy coordinates are wrong")
     void testBoardIsNotUpdated() {
         gb.printBoard();
-        assertEquals(EXPECTED_EMPTY_BOARD_PRINT, testOutputStream.toString());
+        assertEquals(EXPECTED_EMPTY_BOARD_PRINT, getConsoleOutput());
         testOutputStream.reset();
 
         boolean update1 = gb.updateBoard(43, 11, 'X');
@@ -93,7 +79,7 @@ class GameBoardTest {
         boolean update3 = gb.updateBoard(3, 3, 'X');
 
         gb.printBoard();
-        assertEquals(EXPECTED_EMPTY_BOARD_PRINT, testOutputStream.toString());
+        assertEquals(EXPECTED_EMPTY_BOARD_PRINT, getConsoleOutput());
         assertFalse(update1);
         assertFalse(update2);
         assertFalse(update3);
@@ -107,31 +93,22 @@ class GameBoardTest {
         gb.updateBoard(2, 1, 'X');
         gb.printBoard();
 
-        String expectedOutput = "|-----||-----||-----|" +
-                System.lineSeparator() +
-                "|  X  ||  -  ||  -  |" +
-                System.lineSeparator() +
-                "|-----||-----||-----|" +
-                System.lineSeparator() +
-                "|-----||-----||-----|" +
-                System.lineSeparator() +
-                "|  -  ||  O  ||  -  |" +
-                System.lineSeparator() +
-                "|-----||-----||-----|" +
-                System.lineSeparator() +
-                "|-----||-----||-----|" +
-                System.lineSeparator() +
-                "|  -  ||  X  ||  -  |" +
-                System.lineSeparator() +
-                "|-----||-----||-----|" +
-                System.lineSeparator();
+        String expectedOutput = """
+                |-----||-----||-----|
+                |  X  ||  -  ||  -  |
+                |-----||-----||-----|
+                |  -  ||  O  ||  -  |
+                |-----||-----||-----|
+                |  -  ||  X  ||  -  |
+                |-----||-----||-----|
+                """;
 
-        assertEquals(expectedOutput, testOutputStream.toString());
+        assertEquals(expectedOutput, getConsoleOutput());
         testOutputStream.reset();
 
         gb.resetBoard();
         gb.printBoard();
-        assertEquals(EXPECTED_EMPTY_BOARD_PRINT, testOutputStream.toString());
+        assertEquals(EXPECTED_EMPTY_BOARD_PRINT, getConsoleOutput());
     }
 
     @Test
@@ -166,26 +143,17 @@ class GameBoardTest {
         gb.updateBoard(0, 2, 'X');
         gb.printBoard();
 
-        String expectedOutput = "|-----||-----||-----|" +
-                System.lineSeparator() +
-                "|  X  ||  X  ||  X  |" +
-                System.lineSeparator() +
-                "|-----||-----||-----|" +
-                System.lineSeparator() +
-                "|-----||-----||-----|" +
-                System.lineSeparator() +
-                "|  O  ||  O  ||  -  |" +
-                System.lineSeparator() +
-                "|-----||-----||-----|" +
-                System.lineSeparator() +
-                "|-----||-----||-----|" +
-                System.lineSeparator() +
-                "|  -  ||  -  ||  -  |" +
-                System.lineSeparator() +
-                "|-----||-----||-----|" +
-                System.lineSeparator();
+        String expectedOutput = """
+                |-----||-----||-----|
+                |  X  ||  X  ||  X  |
+                |-----||-----||-----|
+                |  O  ||  O  ||  -  |
+                |-----||-----||-----|
+                |  -  ||  -  ||  -  |
+                |-----||-----||-----|
+                """;
 
-        assertEquals(expectedOutput, testOutputStream.toString());
+        assertEquals(expectedOutput, getConsoleOutput());
         assertTrue(gb.checkWin());
     }
 
@@ -200,26 +168,17 @@ class GameBoardTest {
         gb.updateBoard(1, 2, 'O');
         gb.printBoard();
 
-        String expectedOutput = "|-----||-----||-----|" +
-                System.lineSeparator() +
-                "|  X  ||  X  ||  -  |" +
-                System.lineSeparator() +
-                "|-----||-----||-----|" +
-                System.lineSeparator() +
-                "|-----||-----||-----|" +
-                System.lineSeparator() +
-                "|  O  ||  O  ||  O  |" +
-                System.lineSeparator() +
-                "|-----||-----||-----|" +
-                System.lineSeparator() +
-                "|-----||-----||-----|" +
-                System.lineSeparator() +
-                "|  X  ||  -  ||  -  |" +
-                System.lineSeparator() +
-                "|-----||-----||-----|" +
-                System.lineSeparator();
+        String expectedOutput = """
+                |-----||-----||-----|
+                |  X  ||  X  ||  -  |
+                |-----||-----||-----|
+                |  O  ||  O  ||  O  |
+                |-----||-----||-----|
+                |  X  ||  -  ||  -  |
+                |-----||-----||-----|
+                """;
 
-        assertEquals(expectedOutput, testOutputStream.toString());
+        assertEquals(expectedOutput, getConsoleOutput());
         assertTrue(gb.checkWin());
     }
 
@@ -234,26 +193,17 @@ class GameBoardTest {
         gb.updateBoard(2, 2, 'O');
         gb.printBoard();
 
-        String expectedOutput = "|-----||-----||-----|" +
-                System.lineSeparator() +
-                "|  X  ||  X  ||  -  |" +
-                System.lineSeparator() +
-                "|-----||-----||-----|" +
-                System.lineSeparator() +
-                "|-----||-----||-----|" +
-                System.lineSeparator() +
-                "|  X  ||  -  ||  -  |" +
-                System.lineSeparator() +
-                "|-----||-----||-----|" +
-                System.lineSeparator() +
-                "|-----||-----||-----|" +
-                System.lineSeparator() +
-                "|  O  ||  O  ||  O  |" +
-                System.lineSeparator() +
-                "|-----||-----||-----|" +
-                System.lineSeparator();
+        String expectedOutput = """
+                |-----||-----||-----|
+                |  X  ||  X  ||  -  |
+                |-----||-----||-----|
+                |  X  ||  -  ||  -  |
+                |-----||-----||-----|
+                |  O  ||  O  ||  O  |
+                |-----||-----||-----|
+                """;
 
-        assertEquals(expectedOutput, testOutputStream.toString());
+        assertEquals(expectedOutput, getConsoleOutput());
         assertTrue(gb.checkWin());
     }
 
@@ -267,26 +217,17 @@ class GameBoardTest {
         gb.updateBoard(2, 0, 'X');
         gb.printBoard();
 
-        String expectedOutput = "|-----||-----||-----|" +
-                System.lineSeparator() +
-                "|  X  ||  O  ||  -  |" +
-                System.lineSeparator() +
-                "|-----||-----||-----|" +
-                System.lineSeparator() +
-                "|-----||-----||-----|" +
-                System.lineSeparator() +
-                "|  X  ||  O  ||  -  |" +
-                System.lineSeparator() +
-                "|-----||-----||-----|" +
-                System.lineSeparator() +
-                "|-----||-----||-----|" +
-                System.lineSeparator() +
-                "|  X  ||  -  ||  -  |" +
-                System.lineSeparator() +
-                "|-----||-----||-----|" +
-                System.lineSeparator();
+        String expectedOutput = """
+                |-----||-----||-----|
+                |  X  ||  O  ||  -  |
+                |-----||-----||-----|
+                |  X  ||  O  ||  -  |
+                |-----||-----||-----|
+                |  X  ||  -  ||  -  |
+                |-----||-----||-----|
+                """;
 
-        assertEquals(expectedOutput, testOutputStream.toString());
+        assertEquals(expectedOutput, getConsoleOutput());
         assertTrue(gb.checkWin());
     }
 
@@ -300,26 +241,17 @@ class GameBoardTest {
         gb.updateBoard(2, 1, 'X');
         gb.printBoard();
 
-        String expectedOutput = "|-----||-----||-----|" +
-                System.lineSeparator() +
-                "|  -  ||  X  ||  O  |" +
-                System.lineSeparator() +
-                "|-----||-----||-----|" +
-                System.lineSeparator() +
-                "|-----||-----||-----|" +
-                System.lineSeparator() +
-                "|  O  ||  X  ||  -  |" +
-                System.lineSeparator() +
-                "|-----||-----||-----|" +
-                System.lineSeparator() +
-                "|-----||-----||-----|" +
-                System.lineSeparator() +
-                "|  -  ||  X  ||  -  |" +
-                System.lineSeparator() +
-                "|-----||-----||-----|" +
-                System.lineSeparator();
+        String expectedOutput = """
+                |-----||-----||-----|
+                |  -  ||  X  ||  O  |
+                |-----||-----||-----|
+                |  O  ||  X  ||  -  |
+                |-----||-----||-----|
+                |  -  ||  X  ||  -  |
+                |-----||-----||-----|
+                """;
 
-        assertEquals(expectedOutput, testOutputStream.toString());
+        assertEquals(expectedOutput, getConsoleOutput());
         assertTrue(gb.checkWin());
     }
 
@@ -334,26 +266,17 @@ class GameBoardTest {
         gb.updateBoard(2, 2, 'O');
         gb.printBoard();
 
-        String expectedOutput = "|-----||-----||-----|" +
-                System.lineSeparator() +
-                "|  X  ||  X  ||  O  |" +
-                System.lineSeparator() +
-                "|-----||-----||-----|" +
-                System.lineSeparator() +
-                "|-----||-----||-----|" +
-                System.lineSeparator() +
-                "|  X  ||  -  ||  O  |" +
-                System.lineSeparator() +
-                "|-----||-----||-----|" +
-                System.lineSeparator() +
-                "|-----||-----||-----|" +
-                System.lineSeparator() +
-                "|  -  ||  -  ||  O  |" +
-                System.lineSeparator() +
-                "|-----||-----||-----|" +
-                System.lineSeparator();
+        String expectedOutput = """
+                |-----||-----||-----|
+                |  X  ||  X  ||  O  |
+                |-----||-----||-----|
+                |  X  ||  -  ||  O  |
+                |-----||-----||-----|
+                |  -  ||  -  ||  O  |
+                |-----||-----||-----|
+                """;
 
-        assertEquals(expectedOutput, testOutputStream.toString());
+        assertEquals(expectedOutput, getConsoleOutput());
         assertTrue(gb.checkWin());
     }
 
@@ -368,26 +291,17 @@ class GameBoardTest {
         gb.updateBoard(2, 2, 'O');
         gb.printBoard();
 
-        String expectedOutput = "|-----||-----||-----|" +
-                System.lineSeparator() +
-                "|  O  ||  X  ||  -  |" +
-                System.lineSeparator() +
-                "|-----||-----||-----|" +
-                System.lineSeparator() +
-                "|-----||-----||-----|" +
-                System.lineSeparator() +
-                "|  -  ||  O  ||  -  |" +
-                System.lineSeparator() +
-                "|-----||-----||-----|" +
-                System.lineSeparator() +
-                "|-----||-----||-----|" +
-                System.lineSeparator() +
-                "|  X  ||  X  ||  O  |" +
-                System.lineSeparator() +
-                "|-----||-----||-----|" +
-                System.lineSeparator();
+        String expectedOutput = """
+                |-----||-----||-----|
+                |  O  ||  X  ||  -  |
+                |-----||-----||-----|
+                |  -  ||  O  ||  -  |
+                |-----||-----||-----|
+                |  X  ||  X  ||  O  |
+                |-----||-----||-----|
+                """;
 
-        assertEquals(expectedOutput, testOutputStream.toString());
+        assertEquals(expectedOutput, getConsoleOutput());
         assertTrue(gb.checkWin());
     }
 
@@ -403,26 +317,17 @@ class GameBoardTest {
         gb.updateBoard(1, 1, 'X');
         gb.printBoard();
 
-        String expectedOutput = "|-----||-----||-----|" +
-                System.lineSeparator() +
-                "|  O  ||  X  ||  X  |" +
-                System.lineSeparator() +
-                "|-----||-----||-----|" +
-                System.lineSeparator() +
-                "|-----||-----||-----|" +
-                System.lineSeparator() +
-                "|  O  ||  X  ||  -  |" +
-                System.lineSeparator() +
-                "|-----||-----||-----|" +
-                System.lineSeparator() +
-                "|-----||-----||-----|" +
-                System.lineSeparator() +
-                "|  X  ||  O  ||  -  |" +
-                System.lineSeparator() +
-                "|-----||-----||-----|" +
-                System.lineSeparator();
+        String expectedOutput = """
+                |-----||-----||-----|
+                |  O  ||  X  ||  X  |
+                |-----||-----||-----|
+                |  O  ||  X  ||  -  |
+                |-----||-----||-----|
+                |  X  ||  O  ||  -  |
+                |-----||-----||-----|
+                """;
 
-        assertEquals(expectedOutput, testOutputStream.toString());
+        assertEquals(expectedOutput, getConsoleOutput());
         assertTrue(gb.checkWin());
     }
 }

@@ -14,21 +14,20 @@ class GameBoard {
 
     void printBoard() {
         for (char[] i : board) {
-            for (char x : i) {
+            for (char _ : i) {
                 System.out.print("|-----|");
             }
             System.out.println();
 
             for (char j : i) {
-                System.out.print("|  " + j + "  |");
-            }
-            System.out.println();
-
-            for (char x : i) {
-                System.out.print("|-----|");
+                System.out.printf("|  %c  |", j);
             }
             System.out.println();
         }
+        for (char[] _ : board) {
+            System.out.print("|-----|");
+        }
+        System.out.println();
     }
 
     boolean updateBoard(int xIndex, int yIndex, char playerSymbol) {
