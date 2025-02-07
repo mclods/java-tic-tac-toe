@@ -38,7 +38,7 @@ public class Game {
         } else {
             System.out.println("**********************************************");
             System.out.println("-----------------It's a Win :)----------------");
-            System.out.println("*** " + winner.getName() + " WON!!!");
+            System.out.printf("*** %s WON!!!\n", winner.getName());
             System.out.println("**********************************************");
         }
     }
@@ -49,7 +49,7 @@ public class Game {
         do {
             gb.printBoard();
 
-            System.out.println("Choose a position for " + currentPlayer.getName() + "(" + currentPlayer.getSymbol() + ")" + " (1 - 9):");
+            System.out.printf("Choose a position for %s(%c) (1 - 9):\n", currentPlayer.getName(), currentPlayer.getSymbol());
             int position = Integer.parseInt(sc.nextLine()) - 1;
 
             boolean positionIsValid = gb.updateBoard(position / BOARD_SIZE, position % BOARD_SIZE, currentPlayer.getSymbol());
